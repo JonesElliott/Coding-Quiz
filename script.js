@@ -15,8 +15,8 @@ var testEnd = false;
 
 // Object that will hold save score information
 var scoreBoard = {
-    names: [];
-    scores: [];
+    names: [],
+    scores: []
 }
 
 // Declating Variables for questions and answers
@@ -48,6 +48,11 @@ var ansQ10 = ["/ Symbols", "<string></string> tag", "<!-- Here -->", "Quotation 
 // Array containing all answer arrays... Array-ception
 var answers = [ansQ1, ansQ2, ansQ3, ansQ4, ansQ5, ansQ6, ansQ7, ansQ8, ansQ9, ansQ10];
 
+
+// Functions to execute upon page load
+goHome();
+
+
 // Get High Scores from local storage (if any)
 function init() {
     var storedNames = JSON.parse(localStorage.getItem("scoreBoard.names"));
@@ -67,7 +72,7 @@ function init() {
     localStorage.setItem("scoreBoard.scores", JSON.stringify(scoreBoard.scores));
   }
 
-  // Read this function in a "Palpatine Sith Voice"
+  // Read the function in a "Palpatine Sith Voice"... it removes all child elements from the variables
   function executeOrder66() {
     pageTitle.innerHTML = "";
     timerDiv.innerHTML = "";
@@ -75,25 +80,35 @@ function init() {
     contentDiv1.innerHTML = "";
     contentDiv2.innerHTML = "";
     buttonsDiv.innerHTML = "";
-    
   };
 
-  // Function to set home page
-  function homePage() {
-    hsDiv.innerHTML = "";
-  
-    var highScores = document.createElement("button");
-    highScores.textContent = "High Scores";
-    highScores.setAttribute("style", "font-size: 25px; border: 2px solid yellow; margin: 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;")
-    hsDiv.appendChild(highScores);
-  
-    hTag.textContent = "Coding Quiz Challenge";
-    pTag.textContent ="In this coding quiz challenge, you are tasked with answering questions as quickly and accurately as possible within the time limit. Correct answers will increase your score, while incorrect answers will decrease your remaining time. You can check out your ranking in the leaderboards by clicking High Scores. Quiz and timer will start when Begin Quiz is clicked. Good Luck!";
-    answerDiv.appendChild(hTag);
-    answerDiv.appendChild(pTag);
-    startQuiz.setAttribute("style", "display: true;");
-    
-    highScores.addEventListener("click", function () {
-      event.stopPropagation();
-      showLeaderboard();
-    });
+  // Function to change page title
+  function titleText(title) {
+    pageTitle.textContent = title;
+  }
+
+  function goHome() {
+    executeOrder66();
+    titleText("Coding Quiz - Home");
+
+    var homeHeader = document.createElement('h1');
+    homeHeader.setAttribute('style', 'text-align: center; font-size: 25px; border: 2px solid #4CAF50; margin: 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;');
+    homeHeader.textContent = "Coding Quiz Challenge";
+
+    var homeText = document.createElement('p');
+    homeText.setAttribute('style', 'text-align: center; font-size: 24px; margin-left: 200px; margin-right: 200px;');
+    homeText.textContent = "In this coding quiz challenge, you are tasked with answering questions as quickly and accurately as possible within the time limit. Correct answers will increase your score, while incorrect answers will decrease your remaining time. You can check out your ranking in the leaderboards by clicking High Scores. Quiz and timer will start when Begin Quiz is clicked. Good Luck!";
+
+    var startBtn = document.createElement('button');
+    startBtn.setAttribute('style', 'border: 2px solid #4CAF50; padding: 14px 40px; border-radius: 8px; font-size: 24px; transition-duration: 0.4s;');
+    startBtn.textContent = "Begin Quiz";
+
+    var leaderboardBtn = document.createElement('button');
+    leaderboardBtn.setAttribute('style', 'border: 2px solid yellow; padding: 14px 40px; border-radius: 8px; font-size: 24px; transition-duration: 0.4s;');
+    leaderboardBtn.textContent = "Leaderboard";
+
+    headerDiv.appendChild(homeHeader);
+    contentDiv1.appendChild(homeText);
+    buttonsDiv.appendChild(startBtn);
+    buttonsDiv.appendChild(leaderboardBtn);
+    }

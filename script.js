@@ -11,6 +11,7 @@ var userAns;
 var qNum = 0;
 var score = 0;
 var timeLeft = 0;
+var testEnd = false;
 
 // Object that will hold save score information
 var scoreBoard = {
@@ -33,7 +34,7 @@ var q10 = "In order to create a string, text must be put inside...";
 // Array containing all questions
 var questions = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10];
 
-// Variables for answers
+// Arrays for answers
 var ansQ1 = ["style", "script", "code", "body", "div"]; // script
 var ansQ2 = ["JavaScript Commands", "Folders", "Formatting Tags", "Stuff", "Files"]; // Formatting Tags
 var ansQ3 = ["After the closing HTML tag","Inside the HEAD tag","Before the HTML tag","Anywhere is fine","Inside the CSS file"]; // head
@@ -44,5 +45,24 @@ var ansQ7 = ["Equal To", "Assignment Operator", "Is Equivalent", "Same As", "Opp
 var ansQ8 = ["Underscore", "Numbers", "Letters", "Your Name", "Special Symbols"]; // Special Symbols
 var ansQ9 = ["A Placeholder", "It Has A Decimal Place", "A Drifting Number", "A Prime Number","It Includes a Comma"]; //It Has A Decimal Place
 var ansQ10 = ["/ Symbols", "<string></string> tag", "<!-- Here -->", "Quotation Marks", "{ Here }"]; // Quotation Marks
-// Array containing all answers
+// Array containing all answer arrays... Array-ception
 var answers = [ansQ1, ansQ2, ansQ3, ansQ4, ansQ5, ansQ6, ansQ7, ansQ8, ansQ9, ansQ10];
+
+// Get High Scores from local storage (if any)
+function init() {
+    var storedNames = JSON.parse(localStorage.getItem("scoreBoard.names"));
+    var storedScores = JSON.parse(localStorage.getItem("scoreBoard.scores"));
+    // if scoreBoard.names or .scores were retrieved from the localstorage, update the scoreBoard.names or .scores
+    if (storedNames !== null) {
+      scoreBoard.names = storedNames;
+    }
+    if (storedScores !== null) {
+      scoreBoard.scores = storedScores;
+    }
+  }
+  
+  // Save high scores to local storage
+  function storeScores() {
+    localStorage.setItem("scoreBoard.names", JSON.stringify(scoreBoard.names));
+    localStorage.setItem("scoreBoard.scores", JSON.stringify(scoreBoard.scores));
+  }

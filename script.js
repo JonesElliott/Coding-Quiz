@@ -66,3 +66,34 @@ function init() {
     localStorage.setItem("scoreBoard.names", JSON.stringify(scoreBoard.names));
     localStorage.setItem("scoreBoard.scores", JSON.stringify(scoreBoard.scores));
   }
+
+  // Read this function in a "Palpatine Sith Voice"
+  function executeOrder66() {
+    pageTitle.innerHTML = "";
+    timerDiv.innerHTML = "";
+    headerDiv.innerHTML = "";
+    contentDiv1.innerHTML = "";
+    contentDiv2.innerHTML = "";
+    buttonsDiv.innerHTML = "";
+    
+  };
+
+  // Function to set home page
+  function homePage() {
+    hsDiv.innerHTML = "";
+  
+    var highScores = document.createElement("button");
+    highScores.textContent = "High Scores";
+    highScores.setAttribute("style", "font-size: 25px; border: 2px solid yellow; margin: 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;")
+    hsDiv.appendChild(highScores);
+  
+    hTag.textContent = "Coding Quiz Challenge";
+    pTag.textContent ="In this coding quiz challenge, you are tasked with answering questions as quickly and accurately as possible within the time limit. Correct answers will increase your score, while incorrect answers will decrease your remaining time. You can check out your ranking in the leaderboards by clicking High Scores. Quiz and timer will start when Begin Quiz is clicked. Good Luck!";
+    answerDiv.appendChild(hTag);
+    answerDiv.appendChild(pTag);
+    startQuiz.setAttribute("style", "display: true;");
+    
+    highScores.addEventListener("click", function () {
+      event.stopPropagation();
+      showLeaderboard();
+    });

@@ -206,7 +206,7 @@ function goHome() {
 
   leaderboardBtn.addEventListener('click', function(){
     event.stopPropagation();
-    // Need to finish this
+    showLeaderboard();
   });
 }
 
@@ -288,3 +288,53 @@ function nextQuestion() {
   }
 }
 
+function showLeaderboard() {
+  executeOrder66();
+  // Create header
+  var scoreHeader = document.createElement('h1');
+  scoreHeader.setAttribute('style', 'text-align: center; font-size: 25px; border: 2px solid #4CAF50; margin: 50px 25px 0px 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;');
+  scoreHeader.textContent = "High Scores";
+  headerDiv.appendChild(scoreHeader);
+  // Create Home Button
+  var homeButton = document.createElement("button");
+  homeButton.textContent = "Home";
+  homeButton.setAttribute("style", "font-size: 25px; border: 2px solid black; margin: 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;")
+  buttonsDiv.appendChild(homeButton);
+  // Create the high scores list
+  for (var i = 0; i < scoreBoard.names.length; i++) {
+    var boardName = scoreBoard.names[i];
+    var boardScore = scoreBoard.scores[i];
+    
+    var containerDiv = document.createElement('div');
+    containerDiv.setAttribute("id", "container-div");
+    containerDiv.setAttribute("style", "background-color: #E8E8E8; text-align: center; width: 600px; height: auto; margin: 0 auto; padding: 14px 40px; border-radius: 8px;");
+    contentDiv1.appendChild(containerDiv);
+
+    var rowDiv = document.createElement('div');
+    rowDiv.setAttribute("style", "position: relative; display: inline-block; width: 100%; height: 55px; border-bottom: 1px solid black;");
+    containerDiv.appendChild(rowDiv);
+
+    var rankEl = document.createElement('p');
+    rankEl.textContent = ((i+1) + ": ");
+    rankEl.setAttribute("data-index", i);
+    rankEl.setAttribute("style", "width: 33.33%; position: relative; display: inline-block; font-size: 25px;");
+
+    var nameEl = document.createElement('p');
+    nameEl.textContent = boardName;
+    nameEl.setAttribute("data-index", i);
+    nameEl.setAttribute("style", "width: 33.33%; position: relative; display: inline-block; font-size: 25px;");
+
+    var scoreEl = document.createElement('p');
+    scoreEl.textContent = boardScore;
+    scoreEl.setAttribute("data-index", i);
+    scoreEl.setAttribute("style", "width: 33.33%; position: relative; display: inline-block; font-size: 25px;");
+      
+    rowDiv.appendChild(rankEl);
+    rowDiv.appendChild(nameEl);
+    rowDiv.appendChild(scoreEl);
+  }
+  homeButton.addEventListener("click", function () {
+    event.stopPropagation();
+    goHome();
+  });
+}

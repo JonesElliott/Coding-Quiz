@@ -11,7 +11,7 @@ var buttonsDiv = document.querySelector('#buttons-div');
 var userAns;
 var qNum = 0;
 var score = 0;
-var timeLeft = 0;
+var timeLeft = 120;
 var testEnd = false;
 
 // Object that will hold save score information
@@ -56,61 +56,132 @@ goHome();
 
 // Get High Scores from local storage (if any)
 function init() {
-    var storedNames = JSON.parse(localStorage.getItem("scoreBoard.names"));
-    var storedScores = JSON.parse(localStorage.getItem("scoreBoard.scores"));
-    // if scoreBoard.names or .scores were retrieved from the localstorage, update the scoreBoard.names or .scores
-    if (storedNames !== null) {
-      scoreBoard.names = storedNames;
-    }
-    if (storedScores !== null) {
-      scoreBoard.scores = storedScores;
-    }
+  var storedNames = JSON.parse(localStorage.getItem("scoreBoard.names"));
+  var storedScores = JSON.parse(localStorage.getItem("scoreBoard.scores"));
+  // if scoreBoard.names or .scores were retrieved from the localstorage, update the scoreBoard.names or .scores
+  if (storedNames !== null) {
+    scoreBoard.names = storedNames;
   }
+  if (storedScores !== null) {
+    scoreBoard.scores = storedScores;
+  }
+}
   
-  // Save high scores to local storage
-  function storeScores() {
-    localStorage.setItem("scoreBoard.names", JSON.stringify(scoreBoard.names));
-    localStorage.setItem("scoreBoard.scores", JSON.stringify(scoreBoard.scores));
-  }
+// Save high scores to local storage
+function storeScores() {
+  localStorage.setItem("scoreBoard.names", JSON.stringify(scoreBoard.names));
+  localStorage.setItem("scoreBoard.scores", JSON.stringify(scoreBoard.scores));
+}
 
-  // Read the function in a "Palpatine Sith Voice"... it removes all child elements from the variables
-  function executeOrder66() {
-    pageTitle.innerHTML = "";
-    timerDiv.innerHTML = "";
-    headerDiv.innerHTML = "";
-    contentDiv1.innerHTML = "";
-    contentDiv2.innerHTML = "";
-    buttonsDiv.innerHTML = "";
-  };
+// Read the function in a "Palpatine Sith Voice"... it removes all child elements from the variables
+function executeOrder66() {
+  pageTitle.innerHTML = "";
+  timerDiv.innerHTML = "";
+  headerDiv.innerHTML = "";
+  contentDiv1.innerHTML = "";
+  contentDiv2.innerHTML = "";
+  buttonsDiv.innerHTML = "";
+};
 
-  // Function to change page title
-  function titleText(title) {
-    pageTitle.textContent = title;
-  }
-
-  function goHome() {
-    executeOrder66();
-    titleText("Coding Quiz - Home");
-    bodyEl.setAttribute('style', 'background-color: lightblue;')
-
-    var homeHeader = document.createElement('h1');
-    homeHeader.setAttribute('style', 'text-align: center; font-size: 25px; border: 2px solid #4CAF50; margin: 50px 25px 0px 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;');
-    homeHeader.textContent = "Coding Quiz Challenge";
-
-    var homeText = document.createElement('p');
-    homeText.setAttribute('style', 'text-align: center; font-size: 24px; margin: 50px 200px 0px 200px;');
-    homeText.textContent = "In this coding quiz challenge, you are tasked with answering questions as quickly and accurately as possible within the time limit. Correct answers will increase your score, while incorrect answers will decrease your remaining time. You can check out your ranking in the leaderboards by clicking High Scores. Quiz and timer will start when Begin Quiz is clicked. Good Luck!";
-
-    var startBtn = document.createElement('button');
-    startBtn.setAttribute('style', 'border: 2px solid #4CAF50; margin: 50px 50px 0px 0px; padding: 14px 40px; border-radius: 8px; font-size: 24px; transition-duration: 0.4s;');
-    startBtn.textContent = "Begin Quiz";
-
-    var leaderboardBtn = document.createElement('button');
-    leaderboardBtn.setAttribute('style', 'border: 2px solid yellow; margin: 50px 0px 0px 50px; padding: 14px 40px; border-radius: 8px; font-size: 24px; transition-duration: 0.4s;');
-    leaderboardBtn.textContent = "Leaderboard";
-
-    headerDiv.appendChild(homeHeader);
-    contentDiv1.appendChild(homeText);
-    buttonsDiv.appendChild(startBtn);
-    buttonsDiv.appendChild(leaderboardBtn);
+// Timer Function
+function startTimer() {
+  var timerEl = document.createElement('p');
+  timerEl.setAttribute("style", "text-align: center; font-weight: bold; font-size: 30px; border: 2px solid black; margin: 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;");
+  timerDiv.appendChild(timerEl);
+  var setTimer = setInterval(function () {
+    timeLeft--;
+    timerEl.textContent = "Timer: " + timeLeft;
+    if (timeLeft < 26) {
+      timerEl.setAttribute("style","text-align: center; color: red; font-weight: bold; font-size: 30px; border: 2px solid black; margin: 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;");
     }
+    if (timeLeft <= 0 || testEnd === true) {
+      clearInterval(setTimer);
+      timerEl.innerHTML = "";
+      timerEl.setAttribute("style", "");
+      //endGame();
+    }
+  }, 1000);
+}
+
+// Function to change page title
+function titleText(title) {
+  pageTitle.textContent = title;
+}
+
+function goHome() {
+  executeOrder66();
+  titleText("Coding Quiz - Home");
+  bodyEl.setAttribute('style', 'background-color: lightblue;');
+
+  var homeHeader = document.createElement('h1');
+  homeHeader.setAttribute('style', 'text-align: center; font-size: 25px; border: 2px solid #4CAF50; margin: 50px 25px 0px 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;');
+  homeHeader.textContent = "Coding Quiz Challenge";
+
+  var homeText = document.createElement('p');
+  homeText.setAttribute('style', 'text-align: center; font-size: 24px; margin: 50px 200px 0px 200px;');
+  homeText.textContent = "In this coding quiz challenge, you are tasked with answering questions as quickly and accurately as possible within the time limit. Correct answers will increase your score, while incorrect answers will decrease your remaining time. You can check out your ranking in the leaderboards by clicking High Scores. Quiz and timer will start when Begin Quiz is clicked. Good Luck!";
+
+  var startBtn = document.createElement('button');
+  startBtn.setAttribute('style', 'border: 2px solid #4CAF50; margin: 50px 50px 0px 0px; padding: 14px 40px; border-radius: 8px; font-size: 24px; transition-duration: 0.4s;');
+  startBtn.textContent = "Begin Quiz";
+
+  var leaderboardBtn = document.createElement('button');
+  leaderboardBtn.setAttribute('style', 'border: 2px solid yellow; margin: 50px 0px 0px 50px; padding: 14px 40px; border-radius: 8px; font-size: 24px; transition-duration: 0.4s;');
+  leaderboardBtn.textContent = "Leaderboard";
+
+  headerDiv.appendChild(homeHeader);
+  contentDiv1.appendChild(homeText);
+  buttonsDiv.appendChild(startBtn);
+  buttonsDiv.appendChild(leaderboardBtn);
+
+  startBtn.addEventListener('click', function() {
+    event.stopPropagation();
+    startQuiz();
+  });
+
+  leaderboardBtn.addEventListener('click', function(){
+    event.stopPropagation();
+    // Need to finish this
+  });
+}
+
+function startQuiz() {
+  executeOrder66();
+  startTimer();
+
+  var qText = document.createElement('h1');
+  qText.setAttribute('style', 'text-align: center; font-size: 25px; border: 2px solid #4CAF50; margin: 50px 25px 0px 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;');
+  qText.textContent = questions[qNum];
+  headerDiv.appendChild(qText);
+
+  var listEl = document.createElement('ul');
+  listEl.setAttribute('style', 'list-style: none;')
+  contentDiv1.setAttribute('style', 'text-align: center; font-size: 25px; list-style: none;')
+  contentDiv1.appendChild(listEl);
+
+  for (let i = 0; i < answers[qNum].length; i++) {
+    var ansItem = answers[qNum][i];
+
+    var listItem = document.createElement("li");
+    listItem.setAttribute("data-index", i);
+
+    var button = document.createElement("button");
+    button.textContent = ansItem;
+    button.setAttribute("style","font-size: 25px; border: 2px solid black; margin: 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;");
+
+    listItem.appendChild(button);
+    listEl.appendChild(listItem);
+  }
+}
+
+// Answer selection event listener
+listEl.addEventListener("click", function (event) {
+  var element = event.target;
+  if (element.matches("button") === true) {
+    userAnswer = element.parentElement.getAttribute("data-index");
+  }
+  checkAnswer();
+});
+
+
+

@@ -83,10 +83,20 @@ function executeOrder66() {
   buttonsDiv.innerHTML = "";
 };
 
+// Removes all HTML elements except the timerDiv
+function executeOrder67() {
+  pageTitle.innerHTML = "";
+  headerDiv.innerHTML = "";
+  contentDiv1.innerHTML = "";
+  contentDiv2.innerHTML = "";
+  buttonsDiv.innerHTML = "";
+};
+
+//Function to check the user's answer
 function checkAnswer() {
   // Swtich Case to get the correct answer for each question
   var correctAnswer;
-  switch (questionNum) {
+  switch (qNum) {
     case 0: // Get the question number that the user is on
       correctAnswer = 1; // correct answer for this question
       break; // break out of switch case if user is on this question
@@ -129,11 +139,11 @@ function checkAnswer() {
   // Check the user's answer against the correct answer
   if (parseInt(userAnswer) === parseInt(correctAnswer)) {
     score += 10;
-    questionNum++;
+    qNum++;
     nextQuestion();
   } else {
-    secondsLeft -= 10;
-    questionNum++;
+    timeLeft -= 10;
+    qNum++;
     nextQuestion();
   }
 }
@@ -210,8 +220,8 @@ function startQuiz() {
   headerDiv.appendChild(qText);
 
   var listEl = document.createElement('ul');
-  listEl.setAttribute('style', 'list-style: none;')
-  contentDiv1.setAttribute('style', 'text-align: center; font-size: 25px; list-style: none;')
+  listEl.setAttribute('style', 'list-style: none;');
+  contentDiv1.setAttribute('style', 'text-align: center; font-size: 25px; list-style: none;');
   contentDiv1.appendChild(listEl);
 
   for (let i = 0; i < answers[qNum].length; i++) {
@@ -227,16 +237,54 @@ function startQuiz() {
     listItem.appendChild(button);
     listEl.appendChild(listItem);
   }
+  // Answer selection event listener
+  listEl.addEventListener("click", function (event) {
+    var element = event.target;
+    if (element.matches("button") === true) {
+      userAnswer = element.parentElement.getAttribute("data-index");
+    }
+    checkAnswer();
+  });
 }
 
-// Answer selection event listener
-listEl.addEventListener("click", function (event) {
-  var element = event.target;
-  if (element.matches("button") === true) {
-    userAnswer = element.parentElement.getAttribute("data-index");
+
+function nextQuestion() {
+  if (qNum > 9) {
+    testEnd = true;
+  } else {
+    executeOrder67();
+    // Change header to current question
+    var qText = document.createElement('h1');
+    qText.setAttribute('style', 'text-align: center; font-size: 25px; border: 2px solid #4CAF50; margin: 50px 25px 0px 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;');
+    qText.textContent = questions[qNum];
+    headerDiv.appendChild(qText);
+
+    var listEl = document.createElement('ul');
+    listEl.setAttribute('style', 'list-style: none;');
+    contentDiv1.setAttribute('style', 'text-align: center; font-size: 25px; list-style: none;');
+    contentDiv1.appendChild(listEl);
+
+    for (let i = 0; i < answers[qNum].length; i++) {
+      var ansItem = answers[qNum][i];
+  
+      var listItem = document.createElement("li");
+      listItem.setAttribute("data-index", i);
+  
+      var button = document.createElement("button");
+      button.textContent = ansItem;
+      button.setAttribute("style","font-size: 25px; border: 2px solid black; margin: 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;");
+  
+      listItem.appendChild(button);
+      listEl.appendChild(listItem);
+    }
+    // Answer selection event listener
+    listEl.addEventListener("click", function (event) {
+      var element = event.target;
+      if (element.matches("button") === true) {
+        userAnswer = element.parentElement.getAttribute("data-index");
+      }
+      checkAnswer();
+    });
   }
-  checkAnswer();
-});
-
-
+}
 

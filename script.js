@@ -83,6 +83,61 @@ function executeOrder66() {
   buttonsDiv.innerHTML = "";
 };
 
+function checkAnswer() {
+  // Swtich Case to get the correct answer for each question
+  var correctAnswer;
+  switch (questionNum) {
+    case 0: // Get the question number that the user is on
+      correctAnswer = 1; // correct answer for this question
+      break; // break out of switch case if user is on this question
+    case 1:
+      correctAnswer = 2;
+      break;
+    case 2:
+      correctAnswer = 1;
+      break;
+    case 3:
+      correctAnswer = 4;
+      break;
+    case 4:
+      correctAnswer = 2;
+      break;
+    case 5:
+      correctAnswer = 0;
+      break;
+    case 6:
+      correctAnswer = 1;
+      break;
+    case 7:
+      correctAnswer = 4;
+      break;
+    case 8:
+      correctAnswer = 1;
+      break;
+    case 9:
+      correctAnswer = 3;
+      //testEnd = true;
+      break;
+    default:
+      console.log(
+        "Fatal Error: Hmm, my program seems to have broken. I'll be honest, I have no idea how this message would ever appear..."
+      );
+    /* The above console log appeared once while building this application.
+      Still have no idea how the switch case defaulted out when it did.
+      I just reverted my changes and prayed... */
+  }
+  // Check the user's answer against the correct answer
+  if (parseInt(userAnswer) === parseInt(correctAnswer)) {
+    score += 10;
+    questionNum++;
+    nextQuestion();
+  } else {
+    secondsLeft -= 10;
+    questionNum++;
+    nextQuestion();
+  }
+}
+
 // Timer Function
 function startTimer() {
   var timerEl = document.createElement('p');

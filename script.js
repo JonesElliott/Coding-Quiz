@@ -300,7 +300,7 @@ function endQuiz() {
   submitBtn.textContent = "Submit";
   buttonsDiv.appendChild(submitBtn);
 
-  // Event listener for score submission
+  // Event listeners for score submission
   submitBtn.addEventListener("click", function (event) {
     // Prevent default event
     event.preventDefault();
@@ -352,13 +352,13 @@ function showLeaderboard() {
   buttonsDiv.appendChild(homeButton);
 
   contentDiv1.setAttribute('style', 'margin: 50px 0px 30px 0px;');
-  // Create the high scores list
+  // Loop to create the high scores list
   for (var i = 0; i < scoreBoard.names.length; i++) {
     var boardName = scoreBoard.names[i];
     var boardScore = scoreBoard.scores[i];
     
     var containerDiv = document.createElement('div');
-    containerDiv.setAttribute("id", scoreBoard.scores[i]);
+    containerDiv.setAttribute("id", scoreBoard.scores[i]); // Setting element id ==== to score for easier sorting in the sortScore() function
     containerDiv.setAttribute("style", "background-color: #E8E8E8; text-align: center; width: 600px; height: auto; margin: 0 auto; padding: 14px 40px; border-radius: 8px;");
     contentDiv1.appendChild(containerDiv);
 
@@ -385,20 +385,28 @@ function showLeaderboard() {
     rowDiv.appendChild(nameEl);
     rowDiv.appendChild(scoreEl);
   }
+
   sortScores();
+
+  // Country roads, take me home, To the place I belong, West Virginia, mountain mama, Take me home, country roads
   homeButton.addEventListener("click", function () {
     event.stopPropagation();
     goHome();
   });
 }
 
+// Function to sort the high scores and re-write them from highest to lowest score
 function sortScores() {
+  // Get all children of element
   var sortItems = contentDiv1.children;
+  // Change from a NodeList to an array
   sortItems = Array.prototype.slice.call(sortItems, 0);
+  // sort array based on element id
   sortItems.sort(function(a,b){
     var sorted = +b.id - +a.id;
     return sorted;
   });
+  // Re-write the leaderboard in the new order
   for (let i = 0; i < sortItems.length; i++) {
     contentDiv1.appendChild(sortItems[i]);
   }

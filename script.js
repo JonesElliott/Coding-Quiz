@@ -20,6 +20,8 @@ var scoreBoard = {
     scores: []
 }
 
+init();
+
 // Declating Variables for questions and answers
 // Variables for questions
 var q1 = "Which tag contains the JavaScript code?";
@@ -49,10 +51,8 @@ var ansQ10 = ["/ Symbols", "<string></string> tag", "<!-- Here -->", "Quotation 
 // Array containing all answer arrays... Array-ception
 var answers = [ansQ1, ansQ2, ansQ3, ansQ4, ansQ5, ansQ6, ansQ7, ansQ8, ansQ9, ansQ10];
 
-
 // Functions to execute upon page load
 goHome();
-
 
 // Get High Scores from local storage (if any)
 function init() {
@@ -66,7 +66,7 @@ function init() {
     scoreBoard.scores = storedScores;
   }
 }
-  
+
 // Save high scores to local storage
 function storeScores() {
   localStorage.setItem("scoreBoard.names", JSON.stringify(scoreBoard.names));
@@ -126,18 +126,13 @@ function checkAnswer() {
       break;
     case 9:
       correctAnswer = 3;
-      //testEnd = true;
       break;
     default:
-      console.log(
-        "Fatal Error: Hmm, my program seems to have broken. I'll be honest, I have no idea how this message would ever appear..."
-      );
-    /* The above console log appeared once while building this application.
-      Still have no idea how the switch case defaulted out when it did.
-      I just reverted my changes and prayed... */
+      console.log("Fatal Error: Hmm, my program seems to have broken. I'll be honest, I have no idea how this message would ever appear...");
   }
+  console.log("User: " + userAns + " Correct: " + correctAnswer); // Sanity Check
   // Check the user's answer against the correct answer
-  if (parseInt(userAnswer) === parseInt(correctAnswer)) {
+  if (parseInt(userAns) === parseInt(correctAnswer)) {
     score += 10;
     qNum++;
     nextQuestion();
@@ -146,6 +141,7 @@ function checkAnswer() {
     qNum++;
     nextQuestion();
   }
+  console.log(score);
 }
 
 // Timer Function
@@ -153,6 +149,7 @@ function startTimer() {
   var timerEl = document.createElement('p');
   timerEl.setAttribute("style", "text-align: center; font-weight: bold; font-size: 30px; border: 2px solid black; margin: 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;");
   timerDiv.appendChild(timerEl);
+
   var setTimer = setInterval(function () {
     timeLeft--;
     timerEl.textContent = "Timer: " + timeLeft;
@@ -161,9 +158,7 @@ function startTimer() {
     }
     if (timeLeft <= 0 || testEnd === true) {
       clearInterval(setTimer);
-      timerEl.innerHTML = "";
-      timerEl.setAttribute("style", "");
-      //endGame();
+      endQuiz();
     }
   }, 1000);
 }
@@ -173,6 +168,7 @@ function titleText(title) {
   pageTitle.textContent = title;
 }
 
+// Function to go to home page
 function goHome() {
   executeOrder66();
   titleText("Coding Quiz - Home");
@@ -210,6 +206,7 @@ function goHome() {
   });
 }
 
+// initialize the quiz
 function startQuiz() {
   executeOrder66();
   startTimer();
@@ -241,13 +238,13 @@ function startQuiz() {
   listEl.addEventListener("click", function (event) {
     var element = event.target;
     if (element.matches("button") === true) {
-      userAnswer = element.parentElement.getAttribute("data-index");
+      userAns = element.parentElement.getAttribute("data-index");
     }
     checkAnswer();
   });
 }
 
-
+// Move to next question
 function nextQuestion() {
   if (qNum > 9) {
     testEnd = true;
@@ -281,13 +278,66 @@ function nextQuestion() {
     listEl.addEventListener("click", function (event) {
       var element = event.target;
       if (element.matches("button") === true) {
-        userAnswer = element.parentElement.getAttribute("data-index");
+        userAns = element.parentElement.getAttribute("data-index");
       }
       checkAnswer();
     });
   }
 }
 
+function endQuiz() {
+  executeOrder66();
+
+  var endHeader = document.createElement('h1');
+  endHeader.setAttribute('style', 'text-align: center; font-size: 25px; border: 2px solid #4CAF50; margin: 50px 25px 0px 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;');
+  endHeader.textContent = "End of Quiz";
+  headerDiv.appendChild(endHeader);
+
+  var resultsText = document.createElement('p');
+  resultsText.setAttribute('style', 'text-align: center; font-size: 24px; margin-left: 200px; margin-right: 200px;');
+  resultsText.textContent = "Your final score is " + score + ". Enter your name to save your score!";
+  contentDiv1.appendChild(resultsText);
+
+  contentDiv2.setAttribute('style', 'text-align: center;');
+
+  var scoreForm = document.createElement('form');
+  contentDiv1.appendChild(scoreForm);
+
+  // Create the label element
+  var nameLabel = document.createElement("label");
+  nameLabel.setAttribute("for", "userName");
+  nameLabel.textContent = "Name: ";
+  nameLabel.setAttribute("style","font-size: 30px; background: transparent; border: none; margin: 5px 0px 5px;");
+
+  // Create the input element for user input
+  var nameInput = document.createElement("input");
+  nameInput.setAttribute("type", "text");
+  nameInput.setAttribute("id", "score-input");
+  nameInput.setAttribute("style", "background-color: #E8E8E8; color: black; padding: 14px 20px; margin: 8px 0; border: 2px solid black; border-radius: 4px; cursor: pointer;");
+
+  // Apply element changes to HTML tags
+  scoreForm.appendChild(nameLabel);
+  scoreForm.appendChild(nameInput);
+
+  scoreForm.addEventListener("submit", function (event) {
+    // Prevent default event
+    event.preventDefault();
+    event.stopPropagation();
+    var nameText = nameInput.value.trim();
+    // Return from function early if submitted text input is blank
+    if (nameText === "") {
+      return;
+    }
+    //Add new ScoreText to High Scores array
+    scoreBoard.names.push(nameText);
+    scoreBoard.scores.push(score);
+    //nameInput.value = "";
+    storeScores();
+    showLeaderboard();
+  });
+}
+
+// Show the leaderboard
 function showLeaderboard() {
   executeOrder66();
   // Create header
@@ -298,8 +348,10 @@ function showLeaderboard() {
   // Create Home Button
   var homeButton = document.createElement("button");
   homeButton.textContent = "Home";
-  homeButton.setAttribute("style", "font-size: 25px; border: 2px solid black; margin: 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;")
+  homeButton.setAttribute("style", "font-size: 25px; border: 2px solid #4CAF50; margin: 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;")
   buttonsDiv.appendChild(homeButton);
+
+  contentDiv1.setAttribute('style', 'margin: 50px 0px 30px 0px;');
   // Create the high scores list
   for (var i = 0; i < scoreBoard.names.length; i++) {
     var boardName = scoreBoard.names[i];

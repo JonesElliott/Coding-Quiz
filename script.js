@@ -9,10 +9,10 @@ var buttonsDiv = document.querySelector('#buttons-div');
 
 // General variables
 var userAns;
-var qNum = 0;
-var score = 0;
-var timeLeft = 120;
-var testEnd = false;
+var qNum;
+var score;
+var timeLeft;
+var testEnd;
 
 // Object that will hold save score information
 var scoreBoard = {
@@ -173,6 +173,13 @@ function goHome() {
   executeOrder66();
   titleText("Coding Quiz - Home");
   bodyEl.setAttribute('style', 'background-color: lightblue;');
+
+  // Variable Reset
+  userAns;
+  qNum = 0;
+  score = 0;
+  timeLeft = 120;
+  testEnd = false;
 
   var homeHeader = document.createElement('h1');
   homeHeader.setAttribute('style', 'text-align: center; font-size: 25px; border: 2px solid #4CAF50; margin: 50px 25px 0px 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;');

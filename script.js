@@ -1,5 +1,6 @@
 // Declaring variables referencing HTML elements
 var pageTitle = document.querySelector('#title-element');
+var bodyEl = document.querySelector('#body-el');
 var timerDiv = document.querySelector('#timer-div');
 var headerDiv = document.querySelector('#header-div');
 var contentDiv1 = document.querySelector('#content-1-div');
@@ -90,21 +91,22 @@ function init() {
   function goHome() {
     executeOrder66();
     titleText("Coding Quiz - Home");
+    bodyEl.setAttribute('style', 'background-color: lightblue;')
 
     var homeHeader = document.createElement('h1');
-    homeHeader.setAttribute('style', 'text-align: center; font-size: 25px; border: 2px solid #4CAF50; margin: 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;');
+    homeHeader.setAttribute('style', 'text-align: center; font-size: 25px; border: 2px solid #4CAF50; margin: 50px 25px 0px 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;');
     homeHeader.textContent = "Coding Quiz Challenge";
 
     var homeText = document.createElement('p');
-    homeText.setAttribute('style', 'text-align: center; font-size: 24px; margin-left: 200px; margin-right: 200px;');
+    homeText.setAttribute('style', 'text-align: center; font-size: 24px; margin: 50px 200px 0px 200px;');
     homeText.textContent = "In this coding quiz challenge, you are tasked with answering questions as quickly and accurately as possible within the time limit. Correct answers will increase your score, while incorrect answers will decrease your remaining time. You can check out your ranking in the leaderboards by clicking High Scores. Quiz and timer will start when Begin Quiz is clicked. Good Luck!";
 
     var startBtn = document.createElement('button');
-    startBtn.setAttribute('style', 'border: 2px solid #4CAF50; padding: 14px 40px; border-radius: 8px; font-size: 24px; transition-duration: 0.4s;');
+    startBtn.setAttribute('style', 'border: 2px solid #4CAF50; margin: 50px 50px 0px 0px; padding: 14px 40px; border-radius: 8px; font-size: 24px; transition-duration: 0.4s;');
     startBtn.textContent = "Begin Quiz";
 
     var leaderboardBtn = document.createElement('button');
-    leaderboardBtn.setAttribute('style', 'border: 2px solid yellow; padding: 14px 40px; border-radius: 8px; font-size: 24px; transition-duration: 0.4s;');
+    leaderboardBtn.setAttribute('style', 'border: 2px solid yellow; margin: 50px 0px 0px 50px; padding: 14px 40px; border-radius: 8px; font-size: 24px; transition-duration: 0.4s;');
     leaderboardBtn.textContent = "Leaderboard";
 
     headerDiv.appendChild(homeHeader);

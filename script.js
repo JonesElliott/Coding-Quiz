@@ -20,8 +20,6 @@ var scoreBoard = {
     scores: []
 }
 
-init();
-
 // Declating Variables for questions and answers
 // Variables for questions
 var q1 = "Which tag contains the JavaScript code?";
@@ -52,6 +50,7 @@ var ansQ10 = ["/ Symbols", "<string></string> tag", "<!-- Here -->", "Quotation 
 var answers = [ansQ1, ansQ2, ansQ3, ansQ4, ansQ5, ansQ6, ansQ7, ansQ8, ansQ9, ansQ10];
 
 // Functions to execute upon page load
+init();
 goHome();
 
 // Get High Scores from local storage (if any)
@@ -84,7 +83,7 @@ function executeOrder66() {
 };
 
 // Removes all HTML elements except the timerDiv
-function executeOrder67() {
+function executeOrder65() {
   pageTitle.innerHTML = "";
   headerDiv.innerHTML = "";
   contentDiv1.innerHTML = "";
@@ -256,7 +255,7 @@ function nextQuestion() {
   if (qNum > 9) {
     testEnd = true;
   } else {
-    executeOrder67();
+    executeOrder65();
     // Change header to current question
     var qText = document.createElement('h1');
     qText.setAttribute('style', 'text-align: center; font-size: 25px; border: 2px solid #4CAF50; margin: 50px 25px 0px 25px; padding: 14px 40px; border-radius: 12px; background-color: #E8E8E8;');
@@ -365,7 +364,7 @@ function showLeaderboard() {
     var boardScore = scoreBoard.scores[i];
     
     var containerDiv = document.createElement('div');
-    containerDiv.setAttribute("id", "container-div");
+    containerDiv.setAttribute("id", scoreBoard.scores[i]);
     containerDiv.setAttribute("style", "background-color: #E8E8E8; text-align: center; width: 600px; height: auto; margin: 0 auto; padding: 14px 40px; border-radius: 8px;");
     contentDiv1.appendChild(containerDiv);
 
@@ -392,8 +391,23 @@ function showLeaderboard() {
     rowDiv.appendChild(nameEl);
     rowDiv.appendChild(scoreEl);
   }
+  sortScores();
   homeButton.addEventListener("click", function () {
     event.stopPropagation();
     goHome();
   });
+}
+
+function sortScores() {
+  var sortItems = contentDiv1.children;
+  sortItems = Array.prototype.slice.call(sortItems, 0);
+  
+  sortItems.sort(function(a,b){
+    var sorted = +b.id - +a.id;
+    return sorted;
+  });
+
+  for (let i = 0; i < sortItems.length; i++) {
+    contentDiv1.appendChild(sortItems[i]);
+  }
 }

@@ -36,7 +36,7 @@ var q10 = "In order to create a string, text must be put inside...";
 var questions = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10];
 
 // Arrays for answers
-var ansQ1 = ["style", "script", "code", "body", "div"]; // script
+var ansQ1 = ["<style>", "<script>", "<code>", "<body>", "<div>"]; // script
 var ansQ2 = ["JavaScript Commands", "Folders", "Formatting Tags", "Stuff", "Files"]; // Formatting Tags
 var ansQ3 = ["After the closing HTML tag","Inside the HEAD tag","Before the HTML tag","Anywhere is fine","Inside the CSS file"]; // head
 var ansQ4 = [".xml", ".html", ".json", ".css", ".js"]; // .js
@@ -366,22 +366,23 @@ function showLeaderboard() {
     rowDiv.setAttribute("style", "position: relative; display: inline-block; width: 100%; height: 55px; border-bottom: 1px solid black;");
     containerDiv.appendChild(rowDiv);
 
-    var rankEl = document.createElement('p');
-    rankEl.textContent = ((i+1) + ": ");
-    rankEl.setAttribute("data-index", i);
-    rankEl.setAttribute("style", "width: 33.33%; position: relative; display: inline-block; font-size: 25px;");
+    // This doesn't quite work as intended after high scores are recorded and new ones are added
+    // var rankEl = document.createElement('p');
+    // rankEl.textContent = ((i+1) + ": ");
+    // rankEl.setAttribute("data-index", i);
+    // rankEl.setAttribute("style", "width: 33.33%; position: relative; display: inline-block; font-size: 25px;");
 
     var nameEl = document.createElement('p');
     nameEl.textContent = boardName;
     nameEl.setAttribute("data-index", i);
-    nameEl.setAttribute("style", "width: 33.33%; position: relative; display: inline-block; font-size: 25px;");
+    nameEl.setAttribute("style", "width: 50%; position: relative; display: inline-block; font-size: 25px;");
 
     var scoreEl = document.createElement('p');
     scoreEl.textContent = boardScore;
     scoreEl.setAttribute("data-index", i);
-    scoreEl.setAttribute("style", "width: 33.33%; position: relative; display: inline-block; font-size: 25px;");
+    scoreEl.setAttribute("style", "width: 50%; position: relative; display: inline-block; font-size: 25px;");
       
-    rowDiv.appendChild(rankEl);
+    //rowDiv.appendChild(rankEl);
     rowDiv.appendChild(nameEl);
     rowDiv.appendChild(scoreEl);
   }

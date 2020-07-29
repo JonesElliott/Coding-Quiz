@@ -38,7 +38,7 @@ var questions = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10];
 // Arrays for answers
 var ansQ1 = ["<style>", "<script>", "<code>", "<body>", "<div>"]; // script
 var ansQ2 = ["JavaScript Commands", "Folders", "Formatting Tags", "Stuff", "Files"]; // Formatting Tags
-var ansQ3 = ["After the closing HTML tag","Inside the HEAD tag","Before the HTML tag","Anywhere is fine","Inside the CSS file"]; // head
+var ansQ3 = ["After the closing HTML tag","Inside the BODY tag","Before the HTML tag","Anywhere is fine","Inside the CSS file"]; // head
 var ansQ4 = [".xml", ".html", ".json", ".css", ".js"]; // .js
 var ansQ5 = ["<!--this is a comment-->", "%%this is a comment", "//This is a comment", "**This is a comment", "{?--This is a comment"]; // //This is a comment
 var ansQ6 = ["var", "int", "variable", "vrb", "float"]; // var

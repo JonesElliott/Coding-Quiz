@@ -1,12 +1,13 @@
 # JS-Coding-Quiz
-JavaScript Coding Quiz
+
+[Deployed Site](https://joneselliott.github.io/Coding-Quiz/index.html)
 
 ## Description
 This is a quiz API createcd with minimal HTML and CSS utilizing JavaScript to change elements dynamically. The subject of the quiz is coding and contains multiple choice questions. The user is timed during the quiz, each question answered incorrectly decreases the time by 10 seconds. Each correct answer is rewarded with points. At the end of the quiz the user is prompted for their name to submit their score to a High Scores page. User's names and scores are stored locally will populate any stored High Scores upon accessing the leaderboard page.
 
 ## Usage
 #### Home page
-Displays instructions regarding the quiz and a brief explanation of functionality. There are two buttons, Begin Quiz, and Leaderboard. 
+Displays instructions regarding the quiz and a brief explanation of functionality. There are two buttons, Begin Quiz, and Leaderboard.
 
 ![Coding Quiz Home Page](./Assets/home-page.PNG)
 
